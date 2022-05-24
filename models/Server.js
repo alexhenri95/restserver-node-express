@@ -1,6 +1,7 @@
 import express from "express"
 import cors from 'cors'
-import router from "../routes/usuarios.js"
+import routerUsuario from "../routes/usuarios.js"
+import conexionDB from "../database/config.js"
 
 class Server {
 
@@ -8,10 +9,16 @@ class Server {
         this.app = express()
         this.port = process.env.PORT
         this.usuarioPath = '/api/usuarios'
+        //Conexion DB
+        this.conectarDB()
         //Middleware
         this.middleware()
         //Rutas de mi aplicacion
         this.routes()
+    }
+
+    async conectarDB(){
+        await conexionDB()
     }
 
     middleware() {
@@ -26,7 +33,7 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.usuarioPath, router)
+        this.app.use(this.usuarioPath, routerUsuario)
     }
 
     listen(){
