@@ -14,7 +14,7 @@ const buscarUsuarios = async(termino, res) => {
     const esMongoId = mongoose.isValidObjectId(termino) //true
 
     if (esMongoId) {
-        const usuario = await Usuario.findById(termino, {estado:true})
+        const usuario = await Usuario.findById(termino, {estado: true}).select('nombre email rol')
         return res.status(200).json({
             results: usuario ? [ usuario ] : []
         })
@@ -35,7 +35,7 @@ const buscarCategorias = async(termino, res) => {
     const esMongoId = mongoose.isValidObjectId(termino) //true
 
     if (esMongoId) {
-        const categoria = await Categoria.findById(termino, {estado: true})
+        const categoria = await Categoria.findById(termino, {estado: true}).select('nombre')
         return res.status(200).json({
             results: categoria ? [ categoria ] : []
         })
@@ -56,7 +56,7 @@ const buscarProductos = async(termino, res) => {
     const esMongoId = mongoose.isValidObjectId(termino) //true
 
     if (esMongoId) {
-        const producto = await Producto.findById(termino, {estado: true}).populate('categoria', 'nombre')
+        const producto = await Producto.findById(termino, {estado: true}).select('nombre descripcion precio disponible').populate('categoria', 'nombre')
         return res.status(200).json({
             results: producto ? [ producto ] : []
         })
