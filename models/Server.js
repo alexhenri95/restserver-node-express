@@ -3,6 +3,9 @@ import cors from 'cors'
 import routerUsuario from "../routes/usuarios.js"
 import routerAuth from "../routes/auth.js"
 import conexionDB from "../database/config.js"
+import routerCategoria from "../routes/categorias.js"
+import routerProducto from "../routes/productos.js"
+import routerBuscar from "../routes/buscar.js"
 
 class Server {
 
@@ -12,6 +15,9 @@ class Server {
         //rutas
         this.usuarioPath = '/api/usuarios'
         this.authPath = '/api/auth'
+        this.categoriaPath = '/api/categorias'
+        this.productoPath = '/api/productos'
+        this.buscarPath = '/api/buscar'
         //Conexion DB
         this.conectarDB()
         //Middleware
@@ -38,6 +44,9 @@ class Server {
     routes() {
         this.app.use(this.usuarioPath, routerUsuario)
         this.app.use(this.authPath, routerAuth)
+        this.app.use(this.categoriaPath, routerCategoria)
+        this.app.use(this.productoPath, routerProducto)
+        this.app.use(this.buscarPath, routerBuscar)
     }
 
     listen(){
